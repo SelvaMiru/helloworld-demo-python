@@ -28,7 +28,7 @@ jobs:
         run: docker ps
 
       - name: Verify App
-        run: curl -ivk host://localhost
+        run: curl -ivk http://localhost
 
       - name: Remove Test Container
         run: 
