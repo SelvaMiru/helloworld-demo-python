@@ -27,6 +27,9 @@ jobs:
       - name: View Container
         run: docker ps
 
+      - name: Wait 20 secs
+        run: sleep 20
+
       - name: Verify App
         run: curl -ivk http://localhost
 
