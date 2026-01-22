@@ -1,5 +1,16 @@
 name: Docker-CI-Pipeline
-on: push
+# on: push
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+      - 'sample/**'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+
 jobs:
   dockerci-job:
     runs-on: ubuntu-24.04
