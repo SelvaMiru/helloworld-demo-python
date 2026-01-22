@@ -34,7 +34,7 @@ jobs:
         run: curl -ivk http://localhost
 
       - name: Remove Test Container
-        run: 
+        run: |
           docker stop python-app
           docker rm -f python-app
           
