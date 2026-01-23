@@ -16,7 +16,7 @@ class MyHandler(BaseHTTPRequestHandler):
   \____\_______/
 
 
-Hello from Docker! Day-5 training via minikube
+Hello from Docker! Day-5 training via minikube @@
 ''')
 
 def run():
