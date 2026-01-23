@@ -59,3 +59,44 @@ jobs:
         run: |
           docker push ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python:${{ steps.meta.outputs.sha_short }}
           docker push ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python:latest
+
+  k8scd-job:
+    needs: dockerci-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v6
+
+      - name: start minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: test-kube
+        run: kubectl get pods -A
+
+      - name: apply-yaml
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/py-np-service.yaml
+
+      - name: Wait
+        run: |
+          kubectl config set-context --current --namespace=pythonapp-ns
+          kubectl wait --for=condition=ready pod -l app=pythonapp
+ #        run: sleep 30
+        
+      - name: get status
+        run: |
+          kubectl get ns
+          kubectl get svc -n pythonapp-ns
+          kubectl get pods -n pythonapp-ns -o wide 
+          kubectl get pods --show-labels
+      
+      - name: test the app
+        run: | 
+          minikube service list
+          minikube service py-np-service --url
+          echo -n "------------------opening the service------------------"
+          curl $(minikube service py-np-service --url)/version
+
+      
