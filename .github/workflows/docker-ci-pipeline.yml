@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-#      - '.github/**'
+      - '.github/**'
       - 'sample/**'
       - 'README.md'
       - 'CONTRIBUTING.md'
@@ -78,10 +78,12 @@ jobs:
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/py-np-service.yaml
-
+      
+      - name: set namespace
+        run: kubectl config set-context --current --namespace=pythonapp-ns
+        
       - name: Wait
         run: |
-          kubectl config set-context --current --namespace=pythonapp-ns
           kubectl wait --for=condition=ready pod -l app=pythonapp
  #        run: sleep 30
         
@@ -100,5 +102,3 @@ jobs:
           echo -n "------------------opening the service------------------"
           curl $(minikube service py-np-service -n pythonapp-ns --url)/version
           
-
-      
