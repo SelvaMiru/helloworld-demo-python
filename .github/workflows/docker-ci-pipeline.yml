@@ -95,8 +95,10 @@ jobs:
       - name: test the app
         run: | 
           minikube service list
-          minikube service py-np-service --url
+          # minikube service py-np-service --url
+          minikube service py-np-service -n pythonapp-ns --url
           echo -n "------------------opening the service------------------"
-          curl $(minikube service py-np-service --url)/version
+          curl $(minikube service py-np-service -n pythonapp-ns --url)/version
+          
 
       
