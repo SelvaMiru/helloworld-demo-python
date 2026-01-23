@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-deployment
+  namespace: pythonapp-ns
+  labels:
+    app: pythonapp
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      app: pythonapp
+  template:
+    metadata:
+      labels:
+        app: pythonapp
+        name: pythonapp
+    spec:
+      containers:
+      - name: pythonapp
+        image: selvamiru/helloworld-demo-python:latest
+        ports:
+        - containerPort: 8080
