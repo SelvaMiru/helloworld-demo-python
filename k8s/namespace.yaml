@@ -1,1 +1,4 @@
-
+apiversion: v1
+kind: namespace
+metadata:
+  name: pythonapp
